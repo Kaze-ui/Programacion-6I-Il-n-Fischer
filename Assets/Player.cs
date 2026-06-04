@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
         transform.position = pos;
 
         if (textoPoder != null)
-            textoPoder.text = "" + poder;
+            textoPoder.text = "" + Mathf.RoundToInt(poder);
     }
 
     public void AplicarOperador(float valor, OperatorType op)
@@ -26,8 +26,8 @@ public class Player : MonoBehaviour
         switch (op)
         {
             case OperatorType.MULTIPLY: poder *= valor; break;
-            case OperatorType.DIVIDE:   poder /= valor; break;
-            case OperatorType.ADD:      poder += valor; break;
+            case OperatorType.DIVIDE: poder /= valor; break;
+            case OperatorType.ADD: poder += valor; break;
             case OperatorType.SUBTRACT: poder -= valor; break;
         }
     }

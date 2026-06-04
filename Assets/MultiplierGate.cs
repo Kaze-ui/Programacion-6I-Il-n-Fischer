@@ -16,13 +16,19 @@ public class MultiplierGate : Gate
         Debug.Log("Poder actual: " + player.poder);
     }
 
+    public void ActualizarTexto()
+    {
+        if (textoGate != null)
+            textoGate.text = GetLabel();
+    }
+
     public override string GetLabel()
     {
         switch (operador)
         {
             case OperatorType.MULTIPLY: return "x" + valor;
-            case OperatorType.DIVIDE:   return "/" + valor;
-            case OperatorType.ADD:      return "+" + valor;
+            case OperatorType.DIVIDE: return "/" + valor;
+            case OperatorType.ADD: return "+" + valor;
             case OperatorType.SUBTRACT: return "-" + valor;
             default: return "";
         }
