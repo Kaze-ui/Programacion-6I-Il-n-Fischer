@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -16,46 +17,32 @@ public class UIManager : MonoBehaviour
     public Slider sliderPower;
     public TMP_Text textoPower;
 
-    void Awake()
+    void Awake() { Instance = this; }
+
+    void MostrarSolo(GameObject pantalla)
     {
-        Instance = this;
+        pantallaMenu.SetActive(pantalla == pantallaMenu);
+        pantallaGameOver.SetActive(pantalla == pantallaGameOver);
+        pantallaYouWon.SetActive(pantalla == pantallaYouWon);
+        hud.SetActive(pantalla == hud);
     }
 
     void Start()
     {
-        MostrarMenu();
+        string resultado = PlayerPrefs.GetString("resultado", "ninguno");
+        if (resultado == "win") { PlayerPrefs.DeleteKey("resultado"); MostrarSolo(pantallaYouWon); }
+        else if (resultado == "lose") { PlayerPrefs.DeleteKey("resultado"); MostrarSolo(pantallaGameOver); }
+        else MostrarSolo(pantallaMenu);
     }
 
-    public void MostrarMenu()
-    {
-        pantallaMenu.SetActive(true);
-        pantallaGameOver.SetActive(false);
-        pantallaYouWon.SetActive(false);
-        hud.SetActive(false);
+    public void BotonPlay() 
+    { 
+        Debug.Log("Boton Play apretado");
+        SceneManager.LoadScene("Game"); 
     }
-
-    public void BotonPlay()
-    {
-        pantallaMenu.SetActive(false);
-        hud.SetActive(true);
-    }
-
-    public void BotonReintentar()
-    {
-        pantallaGameOver.SetActive(false);
-        pantallaYouWon.SetActive(false);
-        hud.SetActive(true);
-    }
-
-    public void BotonGiveUp()
-    {
-        MostrarMenu();
-    }
-
-    public void BotonTooEasy()
-    {
-        MostrarMenu();
-    }
+    public void BotonReintentar() { SceneManager.LoadScene("Game"); }
+    public void BotonGiveUp() { MostrarSolo(pantallaMenu); }
+    public void BotonTooEasy() { MostrarSolo(pantallaMenu); }
 
     public void ActualizarPower(float valorActual, float valorMaximo)
     {
