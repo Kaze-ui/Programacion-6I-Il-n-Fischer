@@ -14,6 +14,7 @@ public class MultiplierGate : Gate
     {
         player.AplicarOperador(valor, operador);
         Debug.Log("Poder actual: " + player.poder);
+        AudioManager.Instance.ReproducirPuerta();
     }
 
     public void ActualizarTexto()
